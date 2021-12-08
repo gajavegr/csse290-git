@@ -37,7 +37,7 @@ def main():
     fmt = '[%(levelname)s] - %(message)s'
     logging.basicConfig(level=level, format=fmt)
     grepTreeContents(inputSha,inputString,'')
-    logging.info('\n'.join(matchingLines))
+    print('\n'.join(matchingLines),sep="\n")
 
 if __name__ == '__main__':
     main()
