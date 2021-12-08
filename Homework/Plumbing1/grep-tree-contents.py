@@ -27,7 +27,10 @@ def grepTreeContents(treeSha,searchString,currentFolder):
                     logging.debug(matchingLine)
                     matchingLines.append(matchingLine)
         else:
-            grepTreeContents(eachSha,searchString,f"{filename}/")
+            if len(currentFolder) > 0:
+                grepTreeContents(eachSha,searchString,f"{currentFolder}/{filename}/")
+            else:
+                grepTreeContents(eachSha,searchString,f"{filename}/")
 
 def main():
     level = logging.INFO
