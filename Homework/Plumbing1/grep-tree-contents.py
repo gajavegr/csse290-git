@@ -30,7 +30,7 @@ def grepTreeContents(treeSha,searchString,currentFolder):
             grepTreeContents(eachSha,searchString,f"{filename}/")
 
 def main():
-    level = logging.DEBUG
+    level = logging.INFO
     fmt = '[%(levelname)s] - %(message)s'
     logging.basicConfig(level=level, format=fmt)
     grepTreeContents(inputSha,inputString,'')
