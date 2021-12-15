@@ -1,0 +1,21 @@
+gajavegr@gajavegr-stg4:~/AdvancedGit/csse290-git/Homework/Plumbing2/js-parsons$ python3 alternate-history.py -t 4a218e805a4b -t cafd0d12 -t e6ab292b -o alternative-history-branch
+gajavegr@gajavegr-stg4:~/AdvancedGit/csse290-git/Homework/Plumbing2/js-parsons$ git checkout alternative-history-branch 
+Switched to branch 'alternative-history-branch'
+gajavegr@gajavegr-stg4:~/AdvancedGit/csse290-git/Homework/Plumbing2/js-parsons$ git log
+commit c080c12943c31415697768328a634824cbbde797 (HEAD -> alternative-history-branch)
+Author: ~Ganesh Gajavelli <gajavegr@rose-hulman.edu>
+Date:   Wed Dec 15 00:11:07 2021 -0500
+
+    alternative followup
+
+commit 6c34f53b14dba315050494eda48bd16b71ec6955
+Author: ~Ganesh Gajavelli <gajavegr@rose-hulman.edu>
+Date:   Wed Dec 15 00:11:07 2021 -0500
+
+    alternative followup
+
+commit 6149dba2becbc8d2c758a50e82f7daa240662364
+Author: ~Ganesh Gajavelli <gajavegr@rose-hulman.edu>
+Date:   Wed Dec 15 00:11:06 2021 -0500
+
+    alternative begin
