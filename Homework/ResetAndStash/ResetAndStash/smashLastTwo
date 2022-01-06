@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+# This script is designed to run in an existing git repo that might have
+# some changes (either staged or unstaged).
+
+# This script should take the last 2 commits to the repo,
+# smash them together into a single commit and then commit that. The current head should then point to the newly created commit. It should do this and then restore any staged or unstaged changes so that the current state seems unmodified (except of course the history is different).
+
+# This kind of thing can be do with an interactive rebase,
+# but you can accomplish the same task with just some use of resets.
+
+# use it like this
+# ./smashLastTwo
+
+git stash
+git reset HEAD~ #default is mixed
+git add .
+git commit -a -m "SMASH"
+git stash pop

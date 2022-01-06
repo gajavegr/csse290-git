@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+# This script is designed to run in an existing git repo.
+# This file takes two parameters, the SHA of a particular commit and a filename.
+# It should reset the git repo completely to a particular commit, except for the
+# given filename. That file should remain as it is right now.
+# That one file should be listed as an untracked change after the script is run.
+
+# use it like this
+# ./revertExceptFile
+
+# $1 is a variable that represents the first argument, which should be
+# a filename.
+
+mv $2 /tmp
+git reset --hard $1
+mv /tmp/$2 .

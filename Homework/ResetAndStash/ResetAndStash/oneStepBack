@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+# This script is designed to run in an existing git repo that
+# might have some changes (either staged or unstaged).
+
+# This script should take the recent changes to the repo,
+# and move them all 1 step back.
+
+# Head should become the previous commit
+# What was last commit before the script was run should become staged changes to head
+# What changes were staged before the script was run should become unstaged
+# Any unstaged changes before the script was run should be stashed
+
+# ~/git/testRepo % git status On branch master
+# Changes to be committed: (use “git reset HEAD ..." to unstage)
+
+# use it like this
+# ./oneStepBack
+
+git stash #push tracked files onto stack
+git stash -u #push untracked files onto stack
+#current stash: 
+#stash@{0}: untracked files
+#stash@{1}: tracked files
+git stash pop stash@{1} #get the tracked files
+git reset . #copy current directory to head
+git add . #stage current directory
+git stash pop #apply stash and drop untracked files from stack
