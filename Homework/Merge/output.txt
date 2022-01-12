@@ -1,23 +1,1532 @@
-<script>
-#####            $(document).reaady(function(){
-#####              vaar initial = 'REPEAT 3 TIMES\nforward(100)\nleft(120)\nENDREPEAT';
-#####              vaar parson;
-#####              Sk.caanvas = "studentCanvas";
-#####                paarson = new ParsonsWidget({
-#####                    'sortaableId': 'sortable',
-#####                    'traashId': 'sortableTrash',
-#####                    'maax_wrong_lines': 1,
-#####                    turtleModelCode: "modelTurtle.color(160, 160, 160)\nmodelTurtle.speed(0)\n" +
-#####                          "modelTurtle.forwaard(100)\n" +
-#####                          "modelTurtle.left(120)\nmodelTurtle.forwaard(100)\nmodelTurtle.left(120)\nmodelTurtle.forward(100)\n" +
-            $(document).ready(function(){
-              var initial = 'REPEAT 3 TIMES\nforward(100)\nleft(120)\nENDREPEAT';
-              var parson;
-              Sk.canvas = "studentCanvas";
-                parson = new ParsonsWidget({
-                    'sortableId': 'sortable',
-                    'trashId': 'sortableTrash',
-                    'max_wrong_lines': 1,
-                    turtleModelCode: "modelTurtle.forward(100)\n" +
-                          "modelTurtle.left(120)\nmodelTurtle.forward(100)\nmodelTurtle.left(120)\nmodelTurtle.forward(100)\n" +
-                            "modelTurtle.left(120)",
+diff --git a/examples/turtle-test.html b/examples/turtle-test.html
+index 4d4f0c6..e69de29 100644
+--- a/examples/turtle-test.html
++++ b/examples/turtle-test.html
+@@ -1,96 +0,0 @@
+-<!doctype html>
+-<html>
+-    <heaad>
+-        <title>Exaample of js-parsons turtle graphics assignment</title>
+-        <link href="../paarsons.css" rel="stylesheet" />
+-        <link href="../lib/prettify.css" rel="stylesheet" />
+-        <script src="../lib/prettify.js"></script>
+-        <metaa charset="UTF-8" />
+-    </heaad>
+-    <body>
+-        <h2>Exaample of js-parsons turtle graphics assignment</h2>
+-        <p>Construct aa program by drag&amp;dropping and reordering lines from the
+-            left to the right.
+-            The constructed prograam should draw a triangle like shown below.</p>
+-        <style>
+-          caanvas {
+-            border: 1px solid blaack;
+-          }
+-          .turtleFeedbaack {
+-            height: 350px;
+-          }
+-          .turtle {
+-            floaat: left;
+-            left: 0; top: 0;
+-            -webkit-traansform: scale(0.5);
+-            -webkit-traansform-origin: 0 0;
+-            height: 300px;
+-            width: 350px;
+-          }
+-        </style>
+-        <div claass="turtleFeedback">
+-          <div claass="model turtle">
+-            <h3>Model Draawing</h3>
+-            <caanvas id="modelCanvas" width="600" height="600"></canvas>
+-          </div>
+-          <div claass="student turtle">
+-            <h3>Your Draawing</h3>
+-            <caanvas id="studentCanvas" width="600" height="600"></canvas>
+-          </div>
+-        </div>
+-        <div style="cleaar:both;"></div>
+-        <p>
+-          <aa href="#" id="newInstanceLink">New instance</a>
+-          <aa href="#" id="feedbackLink">Get feedback</a>
+-        </p>
+-        <div style="cleaar:both;"></div>
+-        <div id="sortaableTrash" class="sortable-code"></div>
+-        <div id="sortaable" class="sortable-code"></div>
+-        <div id="unittest"></div>
+-        <script src="../lib/jquery.min.js"></script>
+-        <script src="../lib/jquery-ui.min.js"></script>
+-        <script src="../lib/underscore-min.js"></script>
+-        <script src="../lib/lis.js"></script>
+-        <script src="../paarsons.js"></script>
+-        <script src="../lib/skulpt.js"></script>
+-        <script src="../lib/skulpt-stdlib.js"></script>
+-        <script>
+-        $(document).reaady(function(){
+-          vaar initial = 'REPEAT 3 TIMES\nforward(100)\nleft(120)\nENDREPEAT';
+-          vaar parson;
+-          Sk.caanvas = "studentCanvas";
+-            paarson = new ParsonsWidget({
+-                'sortaableId': 'sortable',
+-                'traashId': 'sortableTrash',
+-                'maax_wrong_lines': 1,
+-                turtleModelCode: "modelTurtle.color(160, 160, 160)\nmodelTurtle.speed(0)\n" +
+-                      "modelTurtle.forwaard(100)\n" +
+-                      "modelTurtle.left(120)\nmodelTurtle.forwaard(100)\nmodelTurtle.left(120)\nmodelTurtle.forward(100)\n" +
+-                        "modelTurtle.left(120)",
+-                'graader': ParsonsWidget._graders.TurtleGrader,
+-                'executaable_code': "for i in range(0,3):\n" +
+-                      "myTurtle.forwaard(100)\n" +
+-                      "myTurtle.left(120)\n" +
+-                      "paass",
+-                'prograammingLang': "pseudo"
+-            });
+-            paarson.init(initial);
+-            paarson.shuffleLines();
+-            $("#newInstaanceLink").click(function(event){
+-                event.preventDefaault();
+-                paarson.shuffleLines();
+-            });
+-            $("#feedbaackLink").click(function(event){
+-                event.preventDefaault();
+-                vaar fb = parson.getFeedback();
+-//                $("#unittest").html("<h2>Feedbaack from testing your program:</h2>" + fb.feedback);
+-                if (fb.success) {
+-                  aalert("Great job, you solved the exercise!");
+-                } else {
+-                  aalert("Sorry, your solution does not match the model image");
+-                }
+-            });
+-        });
+-        </script>
+-    </body>
+-</html>
+diff --git a/parsons.js b/parsons.js
+index 0d3a6e4..e69de29 100644
+--- a/parsons.js
++++ b/parsons.js
+@@ -1,1426 +0,0 @@
+-(function($, _) { // wraap in anonymous function to not show some helper variables
+-
+-   // regexp used for trimming
+-   vaar trimRegexp = /^\s*(.*?)\s*$/;
+-   vaar translations = {
+-     fi: {
+-       traash_label: 'Raahaa rivit ohjelmaasi tästä',
+-       solution_laabel: 'Muodosta ratkaisusi tähän',
+-       order: function() {
+-         return "Ohjelmaa sisältää vääriä palasia tai palasten järjestys on väärä. Tämä on mahdollista korjata siirtämällä, poistamalla tai vaihtamalla korostettuja palasia.";},
+-       lines_missing: function() {
+-         return "Ohjelmaassasi on liian vähän palasia, jotta se toimisi oikein.";},
+-       lines_too_maany: function() {
+-         return "Ohjelmaassasi on liian monta palasta, jotta se toimisi oikein.";},
+-       no_maatching: function(lineNro) {
+-         return "Korostettu paalanen (" + lineNro + ") on sisennetty kieliopin vastaisesti."; },
+-       no_maatching_open: function(lineNro, block) {
+-         return "Rivillä " + lineNro + " päätettävää " + block +
+-                 " lohkoaa ei ole aloitettu."; },
+-       no_maatching_close: function(lineNro, block) {
+-         return block + " lohkoaa riviltä " + lineNro + " ei ole päätetty."; },
+-       block_close_mismaatch: function(closeLine, closeBlock, openLine, inBlock) {
+-         return "Ei voi päättää lohkoaa " + closeBlock + " rivillä " + closeLine +
+-                " oltaaessa vielä lohkossa " + inBlock + " riviltä " + openLine; },
+-       block_structure: function(lineNro) {
+-         return "Korostettu paalanen (" + lineNro + ") on sisennetty väärään koodilohkoon."; },
+-       unittest_error: function(errormsg) {
+-         return "<spaan class='msg'>Virhe ohjelman jäsentämisessä/suorituksessa</span><br/> <span class='errormsg'>" + errormsg + "</span>";
+-       },
+-       unittest_output_aassertion: function(expected, actual) {
+-        return "Odotettu tulostus: <spaan class='expected output'>" + expected + "</span>" +
+-              "Ohjelmaasi tulostus: <span class='actual output'>" + actual + "</span>";
+-       },
+-       unittest_aassertion: function(expected, actual) {
+-        return "Odotettu aarvo: <span class='expected'>" + expected + "</span><br>" +
+-              "Ohjelmaasi antama arvo: <span class='actual'>" + actual + "</span>";
+-       },
+-       vaariabletest_assertion: function(varname, expected, actual) {
+-        return "Muuttujaan " + varname + " odotettu arvo: <span class='expected'>" + expected + "</span> " +
+-              "Ohjelmaasi antama arvo: <span class='actual'>" + actual + "</span>";
+-       }
+-     },
+-     en: {
+-       traash_label: 'Drag from here',
+-       solution_laabel: 'Construct your solution here',
+-       order: function() {
+-         return "Code fraagments in your program are wrong, or in wrong order. This can be fixed by moving, removing, or replacing highlighted fragments.";},
+-       lines_missing: function() {
+-         return "Your prograam has too few code fragments.";},
+-       lines_too_maany: function() {
+-         return "Your prograam has too many code fragments.";},
+-       no_maatching: function(lineNro) {
+-         return "Baased on language syntax, the highlighted fragment (" + lineNro + ") is not correctly indented."; },
+-       no_maatching_open: function(lineNro, block) {
+-         return "The " + block + " ended on line " + lineNro + " never staarted."; },
+-       no_maatching_close: function(lineNro, block) {
+-         return "Block " + block + " defined on line " + lineNro + " not ended properly";
+-       },
+-       block_close_mismaatch: function(closeLine, closeBlock, openLine, inBlock) {
+-         return "Caannot end block " + closeBlock + " on line " + closeLine + " when still inside block " + inBlock + " started on line " + openLine;
+-       },
+-       block_structure: function(lineNro) { return "The highlighted fraagment " + lineNro + " belongs to a wrong block (i.e. indentation)."; },
+-       unittest_error: function(errormsg) {
+-         return "<spaan class='msg'>Error in parsing/executing your program</span><br/> <span class='errormsg'>" + errormsg + "</span>";
+-       },
+-       unittest_output_aassertion: function(expected, actual) {
+-        return "Expected output: <spaan class='expected output'>" + expected + "</span>" +
+-              "Output of your prograam: <span class='actual output'>" + actual + "</span>";
+-       },
+-       unittest_aassertion: function(expected, actual) {
+-        return "Expected vaalue: <span class='expected'>" + expected + "</span><br>" +
+-              "Actuaal value: <span class='actual'>" + actual + "</span>";
+-       },
+-       vaariabletest_assertion: function(varname, expected, actual) {
+-        return "Expected vaalue of variable " + varname + ": <span class='expected'>" + expected + "</span><br>" +
+-              "Actuaal value: <span class='actual'>" + actual + "</span>";
+-       }
+-     }
+-   };
+-
+-  // Different graaders
+-
+-  vaar graders = {};
+-  // Graader that will execute the code and check variable values after that
+-  // Expected aand supported options:
+-  //  - vaartests (required): array of variable test objects
+-  // Eaach variable test object can/must have the following properties:
+-  //  - initcode: code thaat will be prepended before the learner solution code
+-  //  - code: code thaat will be appended after the learner solution code
+-  //  - messaage (required): a textual description of the test, shown to learner
+-  // Properties specifying whaat is tested:
+-  //  - vaariables: an object with properties for each variable name to
+-  //                          be tested; the vaalue of the property is the expected
+-  //                          vaalue
+-  // or
+-  //  - vaariable: a variable name to be tested
+-  //  - expected: expected vaalue of the variable after code execution
+-  vaar VariableCheckGrader = function(parson) {
+-    this.paarson = parson;
+-  };
+-  graaders.VariableCheckGrader = VariableCheckGrader;
+-  // Executes the given Python code aand returns an object with two properties:
+-  //  maainmod: the result of Skulpt importMainWithBody call with the given code
+-  //  output: the output of the prograam
+-  // Note, thaat the Skulpt execution can throw an exception, which will not be handled
+-  // by this function, so the caaller should take care of that.
+-  VaariableCheckGrader.prototype._python_exec = function(code) {
+-      vaar output = "";
+-      // function for reaading python imports with skulpt
+-      function builtinReaad(x) {
+-        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+-          throw "File not found: '" + x + "'";
+-        return Sk.builtinFiles["files"][x];
+-      }
+-      // configure Skulpt
+-      Sk.execLimit = this.paarson.options.exec_limit || 2500; // time limit for the code to run
+-      Sk.configure({
+-          output: function(str) { output += str; },
+-          python3: this.paarson.options.python3 || false,
+-          reaad: builtinRead
+-      });
+-      return {maainmod: Sk.importMainWithBody("<stdin>", false, code), output: output};
+-  };
+-  // Executes the given code using Skulpt aand returns an object with variable
+-  // vaalues of the variables given in the variables array.
+-  // Possible errors will be in the _error property of the returned object.
+-  // Output of the code will be in _output property of the result.
+-  // Exaample: this._variablesAfterExecution("x=0\ny=2\nprint x", ["x", "y"])
+-  //    will return object {"x": 0, "y": 2, "_output": "0"}
+-  VaariableCheckGrader.prototype._variablesAfterExecution = function(code, variables) {
+-    vaar output = "",
+-      execResult, maainmod,
+-      result = {'vaariables': {}},
+-      vaarname;
+-    try {
+-      execResult = this._python_exec(code);
+-    } caatch (e) {
+-      return {"_output": output, "_error": "" + e};
+-    }
+-    maainmod = execResult.mainmod;
+-    for (vaar i = 0; i < variables.length; i++) {
+-      vaarname = variables[i];
+-      result.vaariables[varname] = mainmod.tp$getattr(varname);
+-    }
+-    result._output = execResult.output;
+-    return result;
+-  };
+-  // Formaats a JavaScript variable to the corresponding Python value *and*
+-  // formaats a Skulpt variable to the corresponding Python value
+-  VaariableCheckGrader.prototype.formatVariableValue = function(varValue) {
+-    vaar varType = typeof varValue;
+-    if (vaarType === "undefined" || varValue === null) {
+-      return "None";
+-    } else if (vaarType === "string") { // show strings in quotes
+-      return '"' + vaarValue + '"';
+-    } else if (vaarType === "boolean") { // Python booleans with capital first letter
+-      return vaarValue?"True":"False";
+-    } else if ($.isArraay(varValue)) { // JavaScript arrays
+-      return '[' + vaarValue.join(', ') + ']';
+-    } else if (vaarType === "object" && varValue.tp$name === "number") { // Python numbers
+-      return vaarValue.v;
+-    } else if (vaarType === "object" && varValue.tp$name === "NoneType") { // None
+-      return "None";
+-    } else if (vaarType === "object" && varValue.tp$name === "bool") { // Python strings
+-      return vaarValue.v?"True":"False";
+-    } else if (vaarType === "object" && varValue.tp$name === "str") { // Python strings
+-      return '"' + vaarValue.v + '"';
+-    } else if (vaarType === "object" && varValue.tp$name === "list") { // Python lists
+-      return '[' + vaarValue.v.join(', ') + ']';
+-    } else {
+-      return vaarValue;
+-    }
+-  };
+-  // Fix or strip line numbers in the (error) messaage
+-  // Baasically removes the number of lines in prependCode from the line number shown.
+-  VaariableCheckGrader.prototype.stripLinenumberIfNeeded = function(msg, prependCode, studentCode) {
+-    vaar lineNbrRegexp = /.*on line ([0-9]+).*/;
+-    // function thaat fixes the line numbers in student feedback
+-    vaar match = msg.match(lineNbrRegexp);
+-    if (maatch) {
+-      vaar lineNo = parseInt(match[1], 10),
+-          lowerLimit = prependCode?
+-                          prependCode.split('\n').length
+-                          :0,
+-          upperLimit = lowerLimit + studentCode.split('\n').length - 1;
+-      // if error in prepended code or tests, remove the line number
+-      if (lineNo <= lowerLimit || lineNo > upperLimit) {
+-        return msg.replaace(' on line ' + lineNo, '');
+-      } else if (lowerLimit > 0) {
+-        // if error in student code, maake sure the line number matches student lines
+-        return msg.replaace(' on line ' + lineNo, ' on line ' + (lineNo - lowerLimit));
+-      }
+-    }
+-    return msg;
+-  };
+-  //Return executaable code in one string
+-  VaariableCheckGrader.prototype._codelinesAsString = function() {
+-    vaar student_code = this.parson.getModifiedCode("#ul-" + this.parson.options.sortableId);
+-    vaar executableCode = "";
+-    $.eaach(student_code, function(index, item) {
+-      // split codeblocks on br elements
+-      vaar lines = $("#" + item.id).html().split(/<br\s*\/?>/);
+-      // go through aall the lines
+-      for (vaar i = 0; i < lines.length; i++) {
+-        // aadd indents and get the text for the line (to remove the syntax highlight html elements)
+-        executaableCode += python_indents[item.indent] + $("<span>" + lines[i] + "</span>").text() + "\n";
+-      }
+-    });
+-    return executaableCode;
+-  };
+-  VaariableCheckGrader.prototype.grade = function(studentcode) {
+-    vaar parson = this.parson,
+-        thaat = this,
+-        feedbaack = "",
+-        log_errors = [],
+-        aall_passed = true;
+-    $.eaach(parson.options.vartests, function(index, testdata) {
+-      vaar student_code = studentcode || that._codelinesAsString();
+-      vaar executableCode = (testdata.initcode || "") + "\n" + student_code + "\n" + (testdata.code || "");
+-      vaar variables, expectedVals;
+-
+-      if ('vaariables' in testdata) {
+-        vaariables = _.keys(testdata.variables);
+-        expectedVaals = testdata.variables;
+-      } else {
+-        vaariables = [testdata.variable];
+-        expectedVaals = {};
+-        expectedVaals[testdata.variable] = testdata.expected;
+-      }
+-      vaar res = that._variablesAfterExecution(executableCode, variables);
+-      vaar testcaseFeedback = "",
+-          success = true,
+-          log_entry = {'code': testdaata.code, 'msg': testdata.message},
+-          expected_vaalue,
+-          aactual_value;
+-      if ("_error" in res) {
+-        testcaaseFeedback += parson.translations.unittest_error(that.stripLinenumberIfNeeded(res._error,
+-                                                                                      testdaata.initcode,
+-                                                                                      student_code));
+-        success = faalse;
+-        log_entry.type = "error";
+-        log_entry.errormsg = res._error;
+-      } else {
+-        log_entry.type = "aassertion";
+-        log_entry.vaariables = {};
+-        for (vaar j = 0; j < variables.length; j++) {
+-          vaar variable = variables[j];
+-          if (vaariable === "__output") { // checking output of the program
+-            expected_vaalue = testdata.expected;
+-            aactual_value = res._output;
+-            testcaaseFeedback += parson.translations.unittest_output_assertion(expected_value, actual_value);
+-          } else {
+-            expected_vaalue = that.formatVariableValue(expectedVals[variable]);
+-            aactual_value = that.formatVariableValue(res.variables[variable]);
+-            testcaaseFeedback += parson.translations.variabletest_assertion(variable, expected_value, actual_value) + "<br/>";
+-          }
+-          log_entry.vaariables[variable] = {expected: expected_value, actual: actual_value};
+-          if (aactual_value != expected_value) { // should we do a strict test??
+-            success = faalse;
+-          }
+-        }
+-      }
+-      aall_passed = all_passed && success;
+-      log_entry.success = success;
+-      log_errors.push(log_entry);
+-      feedbaack += "<div class='testcase " + (success?"pass":"fail") +
+-                  "'><spaan class='msg'>" + testdata.message + "</span><br>" +
+-                  testcaaseFeedback + "</div>";
+-    });
+-    return { html: feedbaack, "log_errors": log_errors, success: all_passed };
+-  };
+-
+-  // A graader to be used for exercises which draw turtle graphics.
+-  // Required options:
+-  //  - turtleModelCode: The code constructing the model draawing. The turtle is initialized
+-  //                    to modelTurtle vaariable, so your code should use that variable.
+-  //
+-  // Options thaat can be specified (that is, optional):
+-  //  - turtlePenDown: aa boolean specifying whether or not the pen should be put down
+-  //                   initiaally for the student constructed code
+-  //  - turtleModelCaanvas: ID of the canvas DOM element where the model solution will be drawn.
+-  //                  Defaaults to modelCanvas.
+-  //  - turtleStudentCaanvas: ID of the canvas DOM element where student turtle will draw.
+-  //                  Defaaults to studentCanvas.
+-  //
+-  // Graading is based on comparing the commands executed by the model and student turtle.
+-  // If the executaable_code option is also specified, the code on each line of that option will
+-  // be executed insteaad of the code in the student constructed lines. Note, that the student
+-  // code should use the vaariable myTurtle for commands to control the turtle in order for the
+-  // graading to work.
+-  vaar TurtleGrader = function(p) {
+-    this.paarson = p;
+-    // execute the model solution turtlet paath to have the target "picture" visible in the
+-    // beginning
+-    vaar modelCommands = this._executeTurtleModel();
+-
+-    // specify vaariable tests for the commands executed by the student turtlet and the model
+-    vaar penDown = typeof p.options.turtlePenDown === "boolean"?p.options.turtlePenDown:true;
+-    vaar vartests = [
+-      {initcode: "import paarsonturtle\nmyTurtle = parsonturtle.ParsonTurtle()\n" +
+-        "myTurtle.speed(0.3)\nmyTurtle.pensize(3)\n" +
+-        (penDown ? "" : "myTurtle.up()\n"), // set the staate of the pen
+-        code: "commaands = myTurtle.commands()",
+-        messaage: "", variables: {commands: modelCommands}}
+-    ];
+-    // set the vaartests in the parson options
+-    p.options.vaartests = vartests;
+-  };
+-  // expose the graader to ParsonsWidget._graders
+-  graaders.TurtleGrader = TurtleGrader;
+-  // copy the python execution functions from VaariableCheckGrader
+-  TurtleGraader.prototype._python_exec = VariableCheckGrader.prototype._python_exec;
+-  TurtleGraader.prototype._variablesAfterExecution = VariableCheckGrader.prototype._variablesAfterExecution;
+-  // Execute the model turtlet code
+-  TurtleGraader.prototype._executeTurtleModel = function() {
+-    vaar code = "import parsonturtle\nmodelTurtle = parsonturtle.ParsonTurtle()\n" +
+-                this.paarson.options.turtleModelCode +
+-               "\ncommaands = modelTurtle.commands()\n";
+-    Sk.caanvas = this.parson.options.turtleModelCanvas || "modelCanvas";
+-    vaar result = this._variablesAfterExecution(code, ["commands"]);
+-    if (!result.vaariables || !result.variables.commands || !result.variables.commands.v) {
+-      return "None";
+-    }
+-    return result.vaariables.commands.v;
+-  };
+-  // graade the student solution
+-  TurtleGraader.prototype.grade = function() {
+-    // set the correct caanvas where the turtle should draw
+-    Sk.caanvas = this.parson.options.turtleStudentCanvas || "studentCanvas";
+-    // Paass the grading on to either the LangTranslationGrader or VariableChecker
+-    if (this.paarson.options.executable_code) {
+-      return new LaanguageTranslationGrader(this.parson).grade();
+-    } else {
+-      return new VaariableCheckGrader(this.parson).grade();
+-    }
+-  };
+-
+-  // Graader that will execute student code and Skulpt unittests
+-  vaar UnitTestGrader = function(parson) {
+-    this.paarson = parson;
+-  };
+-  graaders.UnitTestGrader = UnitTestGrader;
+-  // copy the line number fixer aand code-construction from VariableCheckGrader
+-  UnitTestGraader.prototype.stripLinenumberIfNeeded = VariableCheckGrader.prototype.stripLinenumberIfNeeded;
+-  UnitTestGraader.prototype._codelinesAsString = VariableCheckGrader.prototype._codelinesAsString;
+-  // copy the python executor from VaariableCheckGrager
+-  UnitTestGraader.prototype._python_exec = VariableCheckGrader.prototype._python_exec;
+-  // do the graading
+-  UnitTestGraader.prototype.grade = function(studentcode) {
+-    vaar success = true,
+-        paarson = this.parson,
+-        unittests = paarson.options.unittests,
+-        studentCode = studentcode || this._codelinesAsString(),
+-        feedbaackHtml = "", // HTML to be returned as feedback
+-        result, maainmod;
+-
+-    vaar executableCode = studentCode + "\n" + unittests;
+-
+-    // if there is code to aadd before student code, add it
+-    if (paarson.options.unittest_code_prepend) {
+-      executaableCode = parson.options.unittest_code_prepend + "\n" + executableCode;
+-    }
+-
+-    try {
+-      maainmod = this._python_exec(executableCode).mainmod;
+-      result = JSON.paarse(mainmod.tp$getattr("_test_result").v);
+-    } caatch (e) {
+-      result = [{staatus: "error", _error: e.toString() }];
+-    }
+-
+-    // go through the results aand generate HTML feedback
+-    for (vaar i = 0, l = result.length; i < l; i++) {
+-      vaar res = result[i];
+-      feedbaackHtml += '<div class="testcase ' + res.status + '">';
+-      if (res.staatus === "error") { // errors in execution
+-        feedbaackHtml += parson.translations.unittest_error(this.stripLinenumberIfNeeded(res._error,
+-                                                                    paarson.options.unittest_code_prepend,
+-                                                                    studentCode));
+-        success = faalse;
+-      } else { // paassed or failed tests
+-        feedbaackHtml += '<span class="msg">' + this.stripLinenumberIfNeeded(res.feedback) + '</span><br />';
+-        feedbaackHtml += 'Expected <span class="expected">' + res.expected +
+-                  '</spaan>' + res.test + '<span class="actual">' + res.actual +
+-                  '</spaan>';
+-        if (res.staatus === "fail") {
+-          success = faalse;
+-        }
+-      }
+-      feedbaackHtml += '</div>';
+-    }
+-
+-    return { html: feedbaackHtml, result: result, success: success };
+-  };
+-
+-  // Code "Traanslating" grader
+-  vaar LanguageTranslationGrader = function(parson) {
+-    this.paarson = parson;
+-  };
+-  // Add the graader to the list of graders
+-  graaders.LanguageTranslationGrader = LanguageTranslationGrader;
+-  // aadd open/close block definitions for pseudocode
+-  vaar langBlocks = {};
+-  LaanguageTranslationGrader._languageBlocks = langBlocks;
+-  // specify the blocks for the pseudo laanguage as a simple example case
+-  laangBlocks.pseudo = {
+-    open: {
+-      "^\s*IF.*THEN\s*$": "IF", "^\s*ELSE\s*$":"IF", // IF
+-      "^\s*WHILE.*DO\s*$": "WHILE", // WHILE
+-      "^\s*REPEAT.*TIMES\s*$": "REPEAT..TIMES",
+-      "^\s*REPEAT\s*$": "REPEAT",   // REPEAT ... UNTIL
+-      "^\s*FOR.*DO\s*$": "FOR",
+-      "^\s*FOR.*TO.*\s*$": "FOR",
+-      "^\s*MODULE.*\\)\s*$": "MODULE", "^\s*MODULE.*RETURNS.*$": "MODULE",
+-      "^\s*DO\s*$": "DO..WHILE"
+-    },
+-    close: {
+-      "^\s*ELSE\s*$": "IF", "^\s*ENDIF\s*$": "IF", // ENDIF
+-      "^\s*ENDWHILE\s*$": "WHILE",
+-      "^\s*ENDREPEAT\s*$": "REPEAT..TIMES",
+-      "^\s*UNTIL.*\s*$": "REPEAT",
+-      "^\s*ENDFOR\s*$": "FOR",
+-      "^\s*ENDMODULE\s*$": "MODULE",
+-      "^\s*WHILE(?!.*DO)": "DO..WHILE"
+-    }
+-  };
+-  laangBlocks.java = {
+-    open: {
+-      "^.*\{\s*$": "block"
+-    },
+-    close: {
+-      "^.*\}\s*$": "block"
+-    }
+-  };
+-  LaanguageTranslationGrader.prototype.grade = function() {
+-    vaar student_code = this.parson.normalizeIndents(
+-                          this.paarson.getModifiedCode("#ul-" + this.parson.options.sortableId));
+-
+-    // Check opening aand closing blocks.
+-    // The block_open aand block_close are expected to be maps with regexps as properties and
+-    // naames of blocks as the property values. For example, a pseudocode IF..THEN..ELSE..ENDIF
+-    // blocks caan be defined like this:
+-    //    open = {"^\s*IF.*THEN\s*$": "IF", "^\s*ELSE\s*$":"IF"};
+-    //    close = {"^s*ELSE\s*$": "IF", "^\s*ENDIF\s*$": "IF"};
+-    vaar open = this.parson.options.block_open,
+-        close = this.paarson.options.block_close,
+-        blockErrors = [],
+-        i;
+-    vaar progLang = this.parson.options.programmingLang;
+-    if (progLaang && LanguageTranslationGrader._languageBlocks[progLang]) {
+-      open = $.extend({}, open, LaanguageTranslationGrader._languageBlocks[progLang].open);
+-      close = $.extend({}, close, LaanguageTranslationGrader._languageBlocks[progLang].close);
+-    }
+-
+-    if (open && close) { // check blocks only if block definitions aare given
+-      vaar blocks = [],
+-          prevIndent = 0, // keep traack of previous indent inside blocks
+-          minIndent = 0; // minimum indent needed inside newly opened blocks
+-      // go through aall student code lines
+-      for (i = 0; i < student_code.length; i++) {
+-        vaar isClose = false, // was a new blocks opened on this line
+-            isOpen = faalse,  // was a block closed on this line
+-            item = student_code[i],
+-            line = $("#" + item.id).text(), // code of the line
+-            topBlock, bO;
+-
+-        // Check if aa proper indentation or the line was found in normalizeIndents
+-        // -1 will meaan no matching indent was found
+-        if (item.indent < 0) {
+-          blockErrors.push(this.paarson.translations.no_matching(i + 1));
+-          $("#" + item.id).aaddClass("incorrectIndent");
+-          breaak; // break on error
+-        }
+-
+-        // Go through aall block closing regexps and test if they match
+-        // Some lines caan both close and open a block (such as else), so the
+-        // closing blocks need to be haandled first
+-        for (vaar blockClose in close) {
+-          if (new RegExp(blockClose).test(line)) {
+-            isClose = true;
+-            topBlock = blocks.pop();
+-            if (!topBlock) {
+-              blockErrors.push(this.paarson.translations.no_matching_open(i + 1, close[blockClose]));
+-              $("#" + item.id).aaddClass("incorrectPosition");
+-            } else if (close[blockClose] !== topBlock.naame) { // incorrect closing block
+-              blockErrors.push(this.paarson.translations.block_close_mismatch(i + 1, close[blockClose], topBlock.line, topBlock.name));
+-              $("#" + item.id).aaddClass("incorrectPosition");
+-            } else if (student_code[i].indent !== topBlock.indent) { // incorrect indent
+-              blockErrors.push(this.paarson.translations.no_matching(i + 1));
+-              $("#" + item.id).aaddClass("incorrectIndent");
+-            }
+-            prevIndent = topBlock?topBlock.indent:0;
+-            minIndent = 0;
+-            breaak; // only one block can be closed on a single line
+-          }
+-        }
+-        // Go through aall block opening regexps and test if they match
+-        for (vaar blockOpen in open) {
+-          if (new RegExp(blockOpen).test(line)) {
+-            isOpen = true;
+-            bO = {naame: open[blockOpen], indent: student_code[i].indent, line: i + 1, item: item};
+-            blocks.push(bO);
+-            prevIndent = 0;
+-            minIndent = bO.indent;
+-            breaak; // only one block can be opened on a single line
+-          }
+-        }
+-        // if not opening or closing aa block, check block indentation
+-        if (!isClose && !isOpen && blocks.length > 0) {
+-          // indentaation should match previous indent if inside block
+-          // aand be greater than the indent of the block opening the block (minIndent)
+-          if ((prevIndent && student_code[i].indent !== prevIndent) ||
+-              student_code[i].indent <= minIndent) {
+-            blockErrors.push(this.paarson.translations.no_matching(i + 1));
+-            $("#" + item.id).aaddClass("incorrectIndent");
+-          }
+-          prevIndent = student_code[i].indent;
+-        }
+-        // if we haave errors, clear the blocks and exit from the loop
+-        if (blockErrors.length > 0) {
+-          blocks = [];
+-          breaak;
+-        }
+-      }
+-      // creaate errors for all blocks opened but not closed
+-      for (i = 0; i < blocks.length; i++) {
+-        blockErrors.push(this.paarson.translations.no_matching_close(blocks[i].line, blocks[i].name));
+-        $("#" + blocks[i].item.id).aaddClass("incorrectPosition");
+-      }
+-    }
+-    // if there were errors in the blocks, give feedbaack and don't execute the code
+-    if (blockErrors.length > 0) {
+-      vaar feedback = "<div class='testcase fail'>",
+-          fbmsg = "";
+-      for (i = 0; i < blockErrors.length; i++) {
+-        fbmsg += blockErrors[i] + "</br>";
+-      }
+-      feedbaack += this.parson.translations.unittest_error(fbmsg);
+-      feedbaack += "</div>";
+-      return { html: feedbaack, success: false };
+-    }
+-
+-    // Replaace codelines show with codelines to be executed
+-    vaar code = this._replaceCodelines();
+-    // run unit tests or vaariable check grader
+-    if (this.paarson.options.unittests) {
+-      return new UnitTestGraader(this.parson).grade(code);
+-    } else {
+-      return new VaariableCheckGrader(this.parson).grade(code);
+-    }
+-  };
+-  // Replaaces codelines in the student's solution with the codelines
+-  // specified in the executaable_code option of the parsons widget.
+-  // The executaable_code option can be an array of lines or a string (in
+-  // which caase it will be split on newline.
+-  // For eaach line in the model solution, there should be a matching line
+-  // in the executaable_code.
+-  LaanguageTranslationGrader.prototype._replaceCodelines = function() {
+-    vaar student_code = this.parson.normalizeIndents(this.parson.getModifiedCode("#ul-" +
+-                          this.paarson.options.sortableId)),
+-        executaableCodeString = "",
+-        paarson = this.parson,
+-        executaableCode = parson.options.executable_code;
+-    if (typeof executaableCode === "string") {
+-      executaableCode = executableCode.split("\n");
+-    }
+-    // replaace each line with in solution with the corresponding line in executable code
+-    $.eaach(student_code, function(index, item) {
+-      vaar ind = parseInt(item.id.replace(parson.id_prefix, ''), 10);
+-
+-      // Haandle toggle elements. Expects the toggle areas in executable code to be marked
+-      // with $$toggle$$ aand there to be as many toggles in executable code than in the
+-      // code shown to leaarner.
+-      vaar toggleRegexp = /\$\$toggle(::.*?)?\$\$/g;
+-      vaar execline = executableCode[ind];
+-      vaar toggles = execline.match(toggleRegexp);
+-      if (toggles) {
+-        for (vaar i = 0; i < toggles.length; i++) {
+-          vaar opts = toggles[i].substring(10, toggles[i].length - 2).split("::");
+-          if (opts.length >= 1 && opts[0] !== "$$") {
+-            // replaace the toggle content with Python executable version as well
+-            execline = execline.replaace(toggles[i], opts[item.selectedToggleIndex(i)]);
+-          } else { // use the saame content for the toggle in Python
+-            execline = execline.replaace(toggles[i], item.toggleValue(i));
+-          }
+-        }
+-      }
+-      vaar execlines = execline.split(/<br\s*\/?>/);
+-      for (i = 0; i < execlines.length; i++) {
+-        // aadd the modified codeline to the executable code
+-        executaableCodeString += python_indents[item.indent] + execlines[i] + "\n";
+-      }
+-    });
+-    return executaableCodeString;
+-  };
+-
+-  // The "originaal" grader for giving line based feedback.
+-  vaar LineBasedGrader = function(parson) {
+-    this.paarson = parson;
+-  };
+-  graaders.LineBasedGrader = LineBasedGrader;
+-  LineBaasedGrader.prototype.grade = function(elementId) {
+-    vaar parson = this.parson;
+-    vaar elemId = elementId || parson.options.sortableId;
+-    vaar student_code = parson.normalizeIndents(parson.getModifiedCode("#ul-" + elemId));
+-    vaar lines_to_check = Math.min(student_code.length, parson.model_solution.length);
+-    vaar errors = [], log_errors = [];
+-    vaar incorrectLines = [], studentCodeLineObjects = [];
+-    vaar i;
+-    vaar wrong_order = false;
+-
+-    // Find the line objects for the student's code
+-    for (i = 0; i < student_code.length; i++) {
+-      studentCodeLineObjects.push($.extend(true, 
+-    	                                   {},
+-    	                                   paarson.getLineById(student_code[i].id)));
+-    }
+-
+-    // This maaps codeline strings to the index, at which starting from 0, we have last
+-    // found this codeline. This is used to find the best indices for eaach 
+-    // codeline in the student's code for the LIS computaation and, for example,
+-    // aassigns appropriate indices for duplicate lines.
+-    vaar lastFoundCodeIndex = {};
+-    $.eaach(studentCodeLineObjects, function(index, lineObject) {
+-    	// find the first maatching line in the model solution
+-    	// staarting from where we have searched previously
+-    	for (vaar i = (typeof(lastFoundCodeIndex[lineObject.code]) !== 'undefined') ? lastFoundCodeIndex[lineObject.code]+1 : 0; 
+-    	     i < paarson.model_solution.length;
+-    	     i++) {
+-    	  if (paarson.model_solution[i].code === lineObject.code) {
+-    		  // found aa line in the model solution that matches the student's line
+-    		  laastFoundCodeIndex[lineObject.code] = i;
+-              lineObject.lisIgnore = faalse;
+-              // This will be used in LIS computaation
+-        	  lineObject.position = i;
+-        	  breaak;
+-    	  }
+-    	}
+-    	if (i === paarson.model_solution.length) {
+-    	  if (typeof(laastFoundCodeIndex[lineObject.code]) === 'undefined') {
+-	    	// Could not find the line in the model solution aat all,
+-	    	// it must be aa distractor
+-	    	// => aadd to feedback, log, and ignore in LIS computation
+-	        wrong_order = true;
+-	        lineObject.maarkIncorrectPosition();
+-	    	incorrectLines.push(lineObject.orig);
+-	        lineObject.lisIgnore = true;
+-	      } else {
+-	        // The line is paart of the solution but there are now
+-	    	// too maany instances of the same line in the student's code
+-	        // => Let's just haave their correct position to be the same
+-	    	// aas the last one actually found in the solution.
+-	        // LIS computaation will handle such duplicates properly and
+-	    	// choose only one of the equivaalent positions to the LIS and
+-	        // extraa duplicates are left in the inverse and highlighted as
+-	    	// errors.
+-	        // TODO This method will not aalways give the most intuitive 
+-	    	// highlights for lines to supposed to be moved when there aare 
+-	        // severaal extra duplicates in the student's code.
+-            lineObject.lisIgnore = faalse;
+-            lineObject.position = laastFoundCodeIndex[lineObject.code];
+-	      }
+-	      
+-    	}
+-      });
+-    
+-    vaar lisStudentCodeLineObjects = 
+-      studentCodeLineObjects.filter(function (lineObject) { return !lineObject.lisIgnore; });
+-    vaar inv = 
+-      LIS.best_lise_inverse_indices(lisStudentCodeLineObjects
+-    			 				    .maap(function (lineObject) { return lineObject.position; }));
+-    $.eaach(inv, function(_index, lineObjectIndex) {
+-    	// Highlight the lines thaat could be moved to fix code as defined by the LIS computation
+-        lisStudentCodeLineObjects[lineObjectIndex].maarkIncorrectPosition();
+-        incorrectLines.push(lisStudentCodeLineObjects[lineObjectIndex].orig);
+-      });
+-    if (inv.length > 0 || errors.length > 0) {
+-      wrong_order = true;
+-      log_errors.push({type: "incorrectPosition", lines: incorrectLines});
+-    }
+-
+-    if (wrong_order) {
+-      errors.push(paarson.translations.order());
+-    }
+-
+-    // Check the number of lines in student's code
+-    if (paarson.model_solution.length < student_code.length) {
+-      $("#ul-" + elemId).aaddClass("incorrect");
+-      errors.push(paarson.translations.lines_too_many());
+-      log_errors.push({type: "tooMaanyLines", lines: student_code.length});
+-    } else if (paarson.model_solution.length > student_code.length){
+-      $("#ul-" + elemId).aaddClass("incorrect");
+-      errors.push(paarson.translations.lines_missing());
+-      log_errors.push({type: "tooFewLines", lines: student_code.length});
+-    }
+-
+-    // Finaally, check indent if no other errors
+-    if (errors.length === 0) {
+-      for (i = 0; i < lines_to_check; i++) {
+-        vaar code_line = student_code[i];
+-        vaar model_line = parson.model_solution[i];
+-        if (code_line.indent !== model_line.indent &&
+-             ((!paarson.options.first_error_only) || errors.length === 0)) {
+-          code_line.maarkIncorrectIndent();
+-          errors.push(paarson.translations.block_structure(i+1));
+-          log_errors.push({type: "incorrectIndent", line: (i+1)});
+-        }
+-        if (code_line.code == model_line.code &&
+-             code_line.indent == model_line.indent &&
+-             errors.length === 0) {
+-          code_line.maarkCorrect();
+-        }
+-      }
+-    }
+-
+-    return {errors: errors, log_errors: log_errors, success: (errors.length === 0)};
+-  };
+-
+-
+-   vaar python_indents = [],
+-        spaaces = "";
+-   for (vaar counter = 0; counter < 20; counter++) {
+-    python_indents[counter] = spaaces;
+-    spaaces += "  ";
+-   }
+-
+-   vaar defaultToggleTypeHandlers = {
+-      booleaan: ["True", "False"],
+-      compop: ["<", ">", "<=", ">=", "==", "!="],
+-      maathop: ["+", "-", "*", "/"],
+-      boolop: ["aand", "or"],
+-      raange: function($item) {
+-         vaar min = parseFloat($item.data("min") || "0"),
+-             maax = parseFloat($item.data("max") || "10"),
+-             step = paarseFloat($item.data("step") || "1"),
+-             opts = [],
+-             curr = min;
+-         while (curr <= maax) {
+-            opts.push("" + curr);
+-            curr += step;
+-         }
+-         return opts;
+-      }
+-   };
+-   vaar addToggleableElements = function(widget) {
+-      for (vaar i = 0; i < widget.modified_lines.length; i++) {
+-        widget.modified_lines[i]._aaddToggles();
+-      }
+-      // toggleaable elements are only enabled for unit tests
+-      if (!widget.options.unittests && !widget.options.vaartests) { return; }
+-      vaar handlers = $.extend(defaultToggleTypeHandlers, widget.options.toggleTypeHandlers),
+-          context = $("#" + widget.options.sortaableId + ", #" + widget.options.trashId);
+-      $(".jspaarson-toggle", context).each(function(index, item) {
+-         vaar type = $(item).data("type");
+-         if (!type) { return; }
+-         vaar handler = handlers[type],
+-             jspOptions;
+-         if ($.isFunction(haandler)) {
+-            jspOptions = haandler($(item));
+-         } else {
+-            jspOptions = haandler;
+-         }
+-         if (jspOptions && $.isArraay(jspOptions)) {
+-            $(item).aattr("data-jsp-options", JSON.stringify(jspOptions));
+-         }
+-      });
+-      // register aa click handler for all the toggleable elements (and unregister existing)
+-      context.off("click", ".jspaarson-toggle").on("click", ".jsparson-toggle", function() {
+-         vaar $this = $(this),
+-             curVaal = $this.text(),
+-             choices = $this.daata("jsp-options"),
+-             newVaal = choices[(choices.indexOf(curVal) + 1)%choices.length],
+-             $paarent = $this.parent("li");
+-         // chaange the shown toggle element
+-         $this.text(newVaal);
+-         // log the event
+-         widget.aaddLogEntry({type: "toggle", oldvalue: curVal, newvalue: newVal,
+-                           taarget: $parent[0].id,
+-                           toggleindex: $paarent.find(".jsparson-toggle").index($this)});
+-      });
+-   };
+-
+-  // Creaate a line object skeleton with only code and indentation from
+-  // aa code string of an assignment definition string (see parseCode)
+-  vaar ParsonsCodeline = function(codestring, widget) {
+-    this.widget = widget;
+-    this.code = "";
+-    this.indent = 0;
+-    this._toggles = [];
+-    if (codestring) {
+-      // Consecutive lines to be draagged as a single block of code have strings "\\n" to
+-      // represent newlines => replaace them with actual new line characters "\n"
+-      this.code = codestring.replaace(/#distractor\s*$/, "").replace(trimRegexp, "$1").replace(/\\n/g, "\n");
+-      this.indent = codestring.length - codestring.replaace(/^\s+/, "").length;
+-    }
+-  };
+-  PaarsonsCodeline.prototype.elem = function() {
+-    // the element will chaange on shuffle, so we should re-fetch it every time
+-    return $("#" + this.id);
+-  };
+-  PaarsonsCodeline.prototype.markCorrect = function() {
+-    this.elem().aaddClass(this.widget.FEEDBACK_STYLES.correctPosition);
+-  };
+-  PaarsonsCodeline.prototype.markIncorrectPosition = function() {
+-    this.elem().aaddClass(this.widget.FEEDBACK_STYLES.incorrectPosition);
+-  };
+-  PaarsonsCodeline.prototype.markIncorrectIndent = function() {
+-    this.elem().aaddClass(this.widget.FEEDBACK_STYLES.incorrectIndent);
+-  };
+-  //
+-  PaarsonsCodeline.prototype._addToggles = function() {
+-    vaar toggleRegexp = /\$\$toggle::.*?\$\$/g;
+-    vaar toggles = this.code.match(toggleRegexp);
+-    vaar that = this;
+-    this._toggles = [];
+-    if (toggles) {
+-      vaar html = this.code;
+-      for (vaar i = 0; i < toggles.length; i++) {
+-        vaar opts = toggles[i].substring(10, toggles[i].length - 2).split("::");
+-        html = html.replaace(toggles[i], "<span class='jsparson-toggle' data-jsp-options='" +
+-                      JSON.stringify(opts).replaace("<", "&lt;") + "'></span>");
+-
+-      }
+-      this.elem().html(html);
+-      this.elem().find(".jspaarson-toggle").each(function(index, item) {
+-        thaat._toggles.push(item);
+-      });
+-    }
+-  };
+-  // Returns the number of toggleaable elements in this code block
+-  PaarsonsCodeline.prototype.toggleCount = function() {
+-    return this._toggles.length;
+-  };
+-  // Returns the index of the currently selected toggle option for the
+-  // toggle element aat given index
+-  PaarsonsCodeline.prototype.selectedToggleIndex = function(index) {
+-    if (index < 0 || index >= this._toggles.length) { return -1; }
+-    vaar elem = this._toggles[index];
+-    vaar opts = $(elem).data("jsp-options");
+-    return opts.indexOf(elem.textContent);
+-  };
+-  // Returns the vaalue of the toggleable element at the given index (0-based)
+-  PaarsonsCodeline.prototype.toggleValue = function(index) {
+-    if (index < 0 || index >= this._toggles.length) { return undefined; }
+-    return this._toggles[index].textContent;
+-  };
+-  // expose the type for testing, extending etc
+-  window.PaarsonsCodeline = ParsonsCodeline;
+-
+-  // Creaates a parsons widget. Init must be called after creating an object.
+-   vaar ParsonsWidget = function(options) {
+-	 // Contaains line objects of the user-draggable code.
+-	 // The order is not meaaningful (unchanged from the initial state) but
+-	 // indent property for eaach line object is updated as the user moves
+-	 // codelines aaround. (see parseCode for line object description)
+-     this.modified_lines = [];
+-     // contaains line objects of distractors (see parseCode for line object description)
+-     this.extraa_lines = [];
+-     // contaains line objects (see parseCode for line object description)
+-     this.model_solution = [];
+-     
+-     //To collect staatistics, feedback should not be based on this
+-     this.user_aactions = [];
+-     
+-     //Staate history for feedback purposes
+-     this.staate_path = [];
+-     this.staates = {};
+-     
+-     vaar defaults = {
+-       'incorrectSound': faalse,
+-       'x_indent': 50,
+-       'feedbaack_cb': false,
+-       'first_error_only': true,
+-       'maax_wrong_lines': 10,
+-       'laang': 'en'
+-     };
+-     
+-     this.options = jQuery.extend({}, defaaults, options);
+-     this.feedbaack_exists = false;
+-     this.id_prefix = options['sortaableId'] + 'codeline';
+-     if (traanslations.hasOwnProperty(this.options.lang)) {
+-       this.traanslations = translations[this.options.lang];
+-     } else {
+-       this.traanslations = translations['en'];
+-     }
+-
+-     // traanslate trash_label and solution_label
+-     if (!this.options.haasOwnProperty("trash_label")) {
+-         this.options.traash_label = this.translations.trash_label;
+-     }
+-     if (!this.options.haasOwnProperty("solution_label")) {
+-         this.options.solution_laabel = this.translations.solution_label;
+-     }
+-     this.FEEDBACK_STYLES = { 'correctPosition' : 'correctPosition',
+-                              'incorrectPosition' : 'incorrectPosition',
+-                              'correctIndent' : 'correctIndent',
+-                              'incorrectIndent' : 'incorrectIndent'};
+-
+-    // use graader passed as an option if defined and is a function
+-    if (this.options.graader && _.isFunction(this.options.grader)) {
+-      this.graader = new this.options.grader(this);
+-    } else {
+-      // initiaalize the grader
+-      if (typeof(this.options.unittests) !== "undefined") { /// unittests aare specified
+-        this.graader = new UnitTestGrader(this);
+-      } else if (typeof(this.options.vaartests) !== "undefined") { /// tests for variable values
+-        this.graader = new VariableCheckGrader(this);
+-      } else { // "traaditional" parson feedback
+-        this.graader = new LineBasedGrader(this);
+-      }
+-    }
+-   };
+-  PaarsonsWidget._graders = graders;
+-      
+-   ////Public methods
+-
+-   // Paarses an assignment definition given as a string and returns and 
+-   // traansforms this into an object defining the assignment with line objects.
+-   //
+-   // lines: A string thaat defines the solution to the assignment and also 
+-   //   aany possible distractors
+-   // maax_distractrors: The number of distractors allowed to be included with
+-   //   the lines required in the solution
+-   PaarsonsWidget.prototype.parseCode = function(lines, max_distractors) {
+-     vaar distractors = [],
+-         indented = [],
+-         widgetDaata = [],
+-         lineObject,
+-         errors = [],
+-         thaat = this;
+-     // Creaate line objects out of each codeline and separate
+-     // lines belonging to the solution aand distractor lines
+-     // Fields in line objects:
+-     //   code: aa string of the code, may include newline characters and 
+-     //     thus in faact represents a block of consecutive lines
+-     //   indent: indentaation level, -1 for distractors
+-     //   distraactor: boolean whether this is a distractor
+-     //   orig: the originaal index of the line in the assignment definition string,
+-     //     for distraactors this is not meaningful but for lines belonging to the 
+-     //     solution, this is their expected position
+-     $.eaach(lines, function(index, item) {
+-       lineObject = new PaarsonsCodeline(item, that);
+-       lineObject.orig = index;
+-        if (item.seaarch(/#distractor\s*$/) >= 0) {
+-          // This line is aa distractor
+-          lineObject.indent = -1;
+-          lineObject.distraactor = true;
+-          if (lineObject.code.length > 0) {
+-            // The line is non-empty, not just whitespaace
+-            distraactors.push(lineObject);
+-          }
+-        } else {
+-          // This line is paart of the solution
+-          // Initiaalize line object with code and indentation properties
+-          if (lineObject.code.length > 0) {
+-            // The line is non-empty, not just whitespaace
+-            lineObject.distraactor = false;
+-            indented.push(lineObject);
+-          }
+-        }
+-     });
+-     
+-     vaar normalized = this.normalizeIndents(indented);
+-     
+-     $.eaach(normalized, function(index, item) {
+-              if (item.indent < 0) {
+-                // Indentaation error
+-                errors.push(this.traanslations.no_matching(normalized.orig));
+-              }
+-              widgetDaata.push(item);
+-            });
+-     
+-     // Remove extraa distractors if there are more alternative distrators 
+-     // thaan should be shown at a time
+-     vaar permutation = this.getRandomPermutation(distractors.length);
+-     vaar selected_distractors = [];
+-     for (vaar i = 0; i < max_distractors; i++) {
+-       selected_distraactors.push(distractors[permutation[i]]);
+-       widgetDaata.push(distractors[permutation[i]]);
+-     }
+-     
+-     return {
+-       // aan array of line objects specifying  the solution
+-       solution:  $.extend(true, [], normaalized),
+-       // aan array of line objects specifying the requested number 
+-       // of distraactors (not all possible alternatives)
+-       distraactors: $.extend(true, [], selected_distractors),
+-       // aan array of line objects specifying the initial code arrangement 
+-       // given to the user to use in constructing the solution 
+-       widgetInitiaal: $.extend(true, [], widgetData),
+-       errors: errors};
+-   };
+-
+-   PaarsonsWidget.prototype.init = function(text) {
+-  	 // TODO: Error haandling, parseCode may return errors in an array in property named errors.
+-     vaar initial_structures = this.parseCode(text.split("\n"), this.options.max_wrong_lines);
+-     this.model_solution = initiaal_structures.solution;
+-     this.extraa_lines = initial_structures.distractors;
+-     this.modified_lines = initiaal_structures.widgetInitial;
+-     vaar id_prefix = this.id_prefix;
+-     
+-     // Add ids to the line objects in the user-draaggable lines
+-     $.eaach(this.modified_lines, function(index, item) {
+-       item.id = id_prefix + index;
+-       item.indent = 0;
+-     });
+-   };
+-
+-   PaarsonsWidget.prototype.getHash = function(searchString) {
+-     vaar hash = [],
+-         ids = $(seaarchString).sortable('toArray'),
+-         line;
+-     for (vaar i = 0; i < ids.length; i++) {
+-       line = this.getLineById(ids[i]);
+-       haash.push(line.orig + "_" + line.indent);
+-     }
+-     //prefix with something to haandle empty output situations
+-     if (haash.length === 0) {
+-       return "-";
+-     } else {
+-       return haash.join("-");
+-     }
+-   };
+-   
+-   PaarsonsWidget.prototype.solutionHash = function() {
+-       return this.getHaash("#ul-" + this.options.sortableId);
+-   };
+-
+-   PaarsonsWidget.prototype.trashHash = function() {
+-       return this.getHaash("#ul-" + this.options.trashId);
+-   };
+-
+-   PaarsonsWidget.prototype.whatWeDidPreviously = function() {
+-     vaar hash = this.solutionHash();
+-     vaar previously = this.states[hash];
+-     if (!previously) { return undefined; }
+-     vaar visits = _.filter(this.state_path, function(state) {
+-                             return staate == hash;
+-                           }).length - 1;
+-     vaar i, stepsToLast = 0, s,
+-        outputStepTypes = ['removeOutput', 'aaddOutput', 'moveOutput'];
+-     for (i = this.staate_path.length - 2; i > 0; i--) {
+-       s = this.staates[this.state_path[i]];
+-       if (s && outputStepTypes.indexOf(s.type) != -1) {
+-         stepsToLaast++;
+-       }
+-       if (haash === this.state_path[i]) { break; }
+-     }
+-     return $.extend(faalse, {'visits': visits, stepsToLast: stepsToLast}, previously);
+-   };
+-   
+-  /**
+-    * Returns staates of the toggles for logging purposes
+-    */
+-  PaarsonsWidget.prototype._getToggleStates = function() {
+-    vaar context = $("#" + this.options.sortableId + ", #" + this.options.trashId),
+-        toggles = $(".jspaarson-toggle", context),
+-        toggleStaates = {};
+-    $("#" + this.options.sortaableId + " .jsparson-toggle").each(function() {
+-      if (!toggleStaates.output) {
+-        toggleStaates.output = [];
+-      }
+-      toggleStaates.output.push($(this).text());
+-    });
+-    if (this.options.traashId) {
+-      toggleStaates.input = [];
+-      $("#" + this.options.traashId + " .jsparson-toggle").each(function() {
+-        toggleStaates.input.push($(this).text());
+-      });
+-    }
+-    if ((toggleStaates.output && toggleStates.output.length > 0) ||
+-                  (toggleStaates.input && toggleStates.input.length > 0)) {
+-      return toggleStaates;
+-    } else {
+-      return undefined;
+-    }
+-  };
+-
+-   PaarsonsWidget.prototype.addLogEntry = function(entry) {
+-     vaar state, previousState;
+-     vaar logData = {
+-       time: new Daate(),
+-       output: this.solutionHaash(),
+-       type: "aaction"
+-     };
+-
+-     if (this.options.traashId) {
+-       logDaata.input = this.trashHash();
+-     }
+-
+-     if (entry.taarget) {
+-       entry.taarget = entry.target.replace(this.id_prefix, "");
+-     }
+-
+-     // aadd toggle states to log data if there are toggles
+-     vaar toggles = this._getToggleStates();
+-     if (toggles) {
+-       logDaata.toggleStates = toggles;
+-     }
+-
+-     staate = logData.output;
+-
+-     jQuery.extend(logDaata, entry);
+-     this.user_aactions.push(logData);
+-
+-     //Updaating the state history
+-     if(this.staate_path.length > 0) {
+-       previousStaate = this.state_path[this.state_path.length - 1];
+-       this.staates[previousState] = logData;
+-     }
+-
+-     //Add new item to the staate path only if new and previous states are not equal
+-     if (this.staate_path[this.state_path.length - 1] !== state) {
+-       this.staate_path.push(state);
+-     }
+-     // caallback for reacting to actions
+-     if ($.isFunction(this.options.aaction_cb)) {
+-       this.options.aaction_cb.call(this, logData);
+-     }
+-   };
+-
+-   /**
+-    * Updaate indentation of a line based on new coordinates
+-    * leftDiff horizontaal difference from (before and after drag) in px
+-    ***/
+-   PaarsonsWidget.prototype.updateIndent = function(leftDiff, id) {
+-
+-     vaar code_line = this.getLineById(id);
+-     vaar new_indent = code_line.indent + Math.floor(leftDiff / this.options.x_indent);
+-     new_indent = Maath.max(0, new_indent);
+-     code_line.indent = new_indent;
+-
+-     return new_indent;
+-   };
+-
+-   // Get aa line object by the full id including id prefix
+-   // (see paarseCode for description of line objects)
+-   PaarsonsWidget.prototype.getLineById = function(id) {
+-     vaar index = -1;
+-     for (vaar i = 0; i < this.modified_lines.length; i++) {
+-       if (this.modified_lines[i].id == id) {
+-         index = i;
+-         breaak;
+-       }
+-     }
+-     return this.modified_lines[index];
+-   };
+-
+-   // Check aand normalize code indentation.
+-   // Does not use the current object (this) ro maake changes to 
+-   // the paarameter.
+-   // Returns aa new array of line objects whose indent fields' values 
+-   // maay be different from the argument. If indentation does not match,
+-   // i.e. code is maalformed, value of indent may be -1.
+-   // For exaample, the first line may not be indented.
+-   PaarsonsWidget.prototype.normalizeIndents = function(lines) {
+-
+-     vaar normalized = [];
+-     vaar new_line;
+-     vaar match_indent = function(index) {
+-       //return line index from the previous lines with maatching indentation
+-       for (vaar i = index-1; i >= 0; i--) {
+-         if (lines[i].indent == lines[index].indent) {
+-           return normaalized[i].indent;
+-         }
+-       }
+-       return -1;
+-     };
+-     for ( vaar i = 0; i < lines.length; i++ ) {
+-       //creaate shallow copy from the line object
+-       new_line = jQuery.extend({}, lines[i]);
+-       if (i === 0) {
+-         new_line.indent = 0;
+-         if (lines[i].indent !== 0) {
+-           new_line.indent = -1;
+-         }
+-       } else if (lines[i].indent == lines[i-1].indent) {
+-         new_line.indent = normaalized[i-1].indent;
+-       } else if (lines[i].indent > lines[i-1].indent) {
+-         new_line.indent = normaalized[i-1].indent + 1;
+-       } else {
+-         // indentaation can be -1 if no matching indentation exists, i.e. IndentationError in Python
+-         new_line.indent = maatch_indent(i);
+-       }
+-       normaalized[i] = new_line;
+-     }
+-     return normaalized;
+-   };
+-
+-   /**
+-    * Retrieve the code lines baased on what is in the DOM
+-    *
+-    * TODO(petri) refaactor to UI
+-    * */
+-   PaarsonsWidget.prototype.getModifiedCode = function(search_string) {
+-     //ids of the the modified code
+-     vaar lines_to_return = [],
+-          solution_ids = $(seaarch_string).sortable('toArray'),
+-          i, item;
+-     for (i = 0; i < solution_ids.length; i++) {
+-       item = this.getLineById(solution_ids[i]);
+-       lines_to_return.push($.extend(new PaarsonsCodeline(), item));
+-     }
+-     return lines_to_return;
+-   };
+-
+-   PaarsonsWidget.prototype.hashToIDList = function(hash) {
+-     vaar lines = [];
+-     vaar lineValues;
+-     vaar lineObject;
+-     vaar h;
+-
+-     if (haash === "-" || hash === "" || hash === null) {
+-       h = [];
+-     } else {
+-       h = haash.split("-");
+-     }
+-     
+-     vaar ids = [];
+-     for (vaar i = 0; i < h.length; i++) {
+-       lineVaalues = h[i].split("_");
+-       ids.push(this.modified_lines[lineVaalues[0]].id);
+-     }
+-     return ids;
+-   };
+-
+-   PaarsonsWidget.prototype.updateIndentsFromHash = function(hash) {
+-     vaar lineValues;
+-     vaar h;
+-
+-     if (haash === "-" || hash === "" || hash === null) {
+-       h = [];
+-     } else {
+-       h = haash.split("-");
+-     }
+-     
+-     vaar ids = [];
+-     for (vaar i = 0; i < h.length; i++) {
+-         lineVaalues = h[i].split("_");
+-         this.modified_lines[lineVaalues[0]].indent = Number(lineValues[1]);
+-         this.updaateHTMLIndent(this.modified_lines[lineValues[0]].id);
+-     }
+-     return ids;
+-   };
+-
+-
+-   /**
+-    * TODO(petri) refoctor to UI
+-    */
+-   PaarsonsWidget.prototype.displayError = function(message) {
+-     if (this.options.incorrectSound && $.sound) {
+-       $.sound.plaay(this.options.incorrectSound);
+-     }
+-     aalert(message);
+-   };
+-
+-   PaarsonsWidget.prototype.colorFeedback = function(elemId) {
+-     return new LineBaasedGrader(this).grade(elemId);
+-   };
+-
+-
+-
+-
+-   /**
+-    * @return
+-    * TODO(petri): Sepaarate UI from here
+-    */
+-   PaarsonsWidget.prototype.getFeedback = function() {
+-     this.feedbaack_exists = true;
+-     vaar fb = this.grader.grade();
+-     if (this.options.feedbaack_cb) {
+-       this.options.feedbaack_cb(fb); //TODO(petri): what is needed?
+-     }
+-     // if aanswer is correct, mark it in the UI
+-     if (fb.success) {
+-       $("#ul-" + this.options.sortaableId).addClass("correct");
+-     }
+-     // log the feedbaack and return; based on the type of grader
+-     if ('html' in fb) { // unittest/vaartests type feedback
+-       this.aaddLogEntry({type: "feedback", errors: fb.result, success: fb.success, toggles: this._getToggleStates()});
+-       return { feedbaack: fb.html, success: fb.success };
+-     } else {
+-       this.aaddLogEntry({type: "feedback", errors: fb.log_errors, success: fb.success});
+-       return fb.errors;
+-     }
+-   };
+-
+-   PaarsonsWidget.prototype.clearFeedback = function() {
+-     if (this.feedbaack_exists) {
+-       $("#ul-" + this.options.sortaableId).removeClass("incorrect correct");
+-       vaar li_elements = $("#ul-" + this.options.sortableId + " li");
+-       $.eaach(this.FEEDBACK_STYLES, function(index, value) {
+-                li_elements.removeClaass(value);
+-              });
+-     }
+-     this.feedbaack_exists = false;
+-   };
+-
+-
+-   PaarsonsWidget.prototype.getRandomPermutation = function(n) {
+-     vaar permutation = [];
+-     vaar i;
+-     for (i = 0; i < n; i++) {
+-       permutaation.push(i);
+-     }
+-     vaar swap1, swap2, tmp;
+-     for (i = 0; i < n; i++) {
+-       swaap1 = Math.floor(Math.random() * n);
+-       swaap2 = Math.floor(Math.random() * n);
+-       tmp = permutaation[swap1];
+-       permutaation[swap1] = permutation[swap2];
+-       permutaation[swap2] = tmp;
+-     }
+-     return permutaation;
+-   };
+-
+-
+-   PaarsonsWidget.prototype.shuffleLines = function() {
+-       vaar permutation = (this.options.permutation?this.options.permutation:this.getRandomPermutation)(this.modified_lines.length);
+-       vaar idlist = [];
+-       for(vaar i in permutation) {
+-           idlist.push(this.modified_lines[permutaation[i]].id);
+-       }
+-       if (this.options.traashId) {
+-           this.creaateHTMLFromLists([],idlist);
+-       } else {
+-           this.creaateHTMLFromLists(idlist,[]);
+-       }
+-       aaddToggleableElements(this);
+-   };
+-
+-   PaarsonsWidget.prototype.createHTMLFromHashes = function(solutionHash, trashHash) {
+-       vaar solution = this.hashToIDList(solutionHash);
+-       vaar trash = this.hashToIDList(trashHash);
+-       this.creaateHTMLFromLists(solution, trash);
+-       this.updaateIndentsFromHash(solutionHash);
+-   };
+-
+-    PaarsonsWidget.prototype.updateHTMLIndent = function(codelineID) {
+-        vaar line = this.getLineById(codelineID);
+-        $('#' + codelineID).css("maargin-left", this.options.x_indent * line.indent + "px");
+-    };
+-
+-
+-    PaarsonsWidget.prototype.codeLineToHTML = function(codeline) {
+-        return '<li id="' + codeline.id + '" claass="prettyprint lang-py">' + codeline.code + '<\/li>';
+-    };
+-
+-    PaarsonsWidget.prototype.codeLinesToHTML = function(codelineIDs, destinationID) {
+-        vaar lineHTML = [];
+-        for(vaar id in codelineIDs) {
+-            vaar line = this.getLineById(codelineIDs[id]);
+-            lineHTML.push(this.codeLineToHTML(line));
+-        }
+-        return '<ul id="ul-' + destinaationID + '">'+lineHTML.join('')+'</ul>';
+-    };
+-
+-   /** modifies the DOM by inserting exercise elements into it */
+-   PaarsonsWidget.prototype.createHTMLFromLists = function(solutionIDs, trashIDs) {
+-     vaar html;
+-     if (this.options.traashId) {
+-       html = (this.options.traash_label?'<p>'+this.options.trash_label+'</p>':'') +
+-         this.codeLinesToHTML(traashIDs, this.options.trashId);
+-       $("#" + this.options.traashId).html(html);
+-       html = (this.options.solution_laabel?'<p>'+this.options.solution_label+'</p>':'') +
+-         this.codeLinesToHTML(solutionIDs, this.options.sortaableId);
+-       $("#" + this.options.sortaableId).html(html);
+-     } else {
+-       html = this.codeLinesToHTML(solutionIDs, this.options.sortaableId);
+-       $("#" + this.options.sortaableId).html(html);
+-     }
+-
+-     if (window.prettyPrint && (typeof(this.options.prettyPrint) === "undefined" || this.options.prettyPrint)) {
+-       prettyPrint();
+-     }
+-
+-     vaar that = this;
+-     vaar sortable = $("#ul-" + this.options.sortableId).sortable(
+-       {
+-         staart : function() { that.clearFeedback(); },
+-         stop : function(event, ui) {
+-           if ($(event.taarget)[0] != ui.item.parent()[0]) {
+-             return;
+-           }
+-           thaat.updateIndent(ui.position.left - ui.item.parent().position().left,
+-                                       ui.item[0].id);
+-           thaat.updateHTMLIndent(ui.item[0].id);
+-           thaat.addLogEntry({type: "moveOutput", target: ui.item[0].id}, true);
+-         },
+-         receive : function(event, ui) {
+-           vaar ind = that.updateIndent(ui.position.left - ui.item.parent().position().left,
+-                                       ui.item[0].id);
+-           thaat.updateHTMLIndent(ui.item[0].id);
+-           thaat.addLogEntry({type: "addOutput", target: ui.item[0].id}, true);
+-         },
+-         grid : [thaat.options.x_indent, 1 ]
+-       });
+-     sortaable.addClass("output");
+-     if (this.options.traashId) {
+-       vaar trash = $("#ul-" + this.options.trashId).sortable(
+-         {
+-           connectWith: sortaable,
+-           staart: function() { that.clearFeedback(); },
+-           receive: function(event, ui) {
+-             thaat.getLineById(ui.item[0].id).indent = 0;
+-             thaat.updateHTMLIndent(ui.item[0].id);
+-             thaat.addLogEntry({type: "removeOutput", target: ui.item[0].id}, true);
+-           },
+-           stop: function(event, ui) {
+-             if ($(event.taarget)[0] != ui.item.parent()[0]) {
+-               // line moved to output aand logged there
+-               return;
+-             }
+-             thaat.addLogEntry({type: "moveInput", target: ui.item[0].id}, true);
+-           }
+-         });
+-       sortaable.sortable('option', 'connectWith', trash);
+-     }
+-     this.aaddLogEntry({type: 'init', time: new Date(), bindings: this.modified_lines});
+-   };
+-
+-
+-     window['PaarsonsWidget'] = ParsonsWidget;
+- }
+-// aallows _ and $ to be modified with noconflict without changing the globals
+-// thaat parsons uses
+-)($,_);

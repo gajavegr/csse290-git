@@ -1,0 +1,16 @@
+git clone https://github.com/js-parsons/js-parsons.git
+cp ../auto-merge-with-comments.py js-parsons/
+cd js-parsons/
+git checkout 7e648132e0
+sed -i s/a/aa/ parsons.js examples/turtle-test.html
+git commit -am "silly modification"
+
+                        0                     1     2         3         4        5        6          7       8
+python3 neelie-auto-merge-with-comments.py --use 6348d93 --commitify deeffdf --branch SomeOutput --prefix "##### "
+git diff 6348d93 parsons.js examples/turtle-test.html > output.txt
+
+python3 auto-merge-with-comments.py --use fb4a59c --commitify deeffdf --branch SomeOutput --prefix "##### "
+git diff fb4a59c parsons.js examples/turtle-test.html > output.txt
+
+python3 help.py --use f1ec53a --commitify deeffdf --branch SomeOutput --prefix "##### "
+git diff f1ec53a parsons.js examples/turtle-test.html > output.txt
