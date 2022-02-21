@@ -1,0 +1,13 @@
+[user]
+	email = gajavegr@rose-hulman.edu
+	name = ~Ganesh Gajavelli
+[credential]
+	helper = store
+[core]
+	editor = nano
+[web]
+	browser = google-chrome
+[color "branch"]
+	current = orange
+	local = red
+	remote = red
